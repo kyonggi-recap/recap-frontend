@@ -1,0 +1,52 @@
+/* components/Header.css */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    border-bottom: 1px solid #ddd;
+    height: 40px; /* 헤더 높이 고정 */
+  }
+  
+  .header_logo {
+    cursor: pointer;
+    height: 50px; /* 원하는 높이로 조정 */
+    width: auto; /* 너비는 자동으로 조정 */
+  }
+  
+  .icons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon {
+    height: 30px;
+    cursor: pointer;
+  }
+  
+  .search-icon {
+    margin-right: 10px;
+    cursor: pointer; /* 검색 아이콘에 커서 포인터 추가 */
+  }
+  
+  .search-form {
+    display: flex;
+    margin-left: 20px; /* 아이콘과의 간격 조정 */
+  }
+  
+  .search-input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+  
+  .search-button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }

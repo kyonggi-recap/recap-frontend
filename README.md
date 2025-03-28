@@ -11,6 +11,8 @@ Currently, two official plugins are available:
 
 If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 
+
+// 여기서부터 한 작업입니다.
 node.js 설치. (node 버전 : 22.14.0 / npm 버전 : 10.9.2 )
 바탕 화면에 리액트 폴더 하나 만들기 (이름은 소문자로) vscode에서 해당 폴더 열고, 터미널 열기(ctrl + j )
 터미널에 npm create vite@latest 입력
@@ -49,5 +51,6 @@ router 설치
 - npm i react-router-dom
 - src에 폴더 pages 만들기 (페이지 모아놓는 파일)
 - main.jsx에 <App/>을 <BrowserRouter>로 묶기.
+- // !!!!!!!!!!!! 중요 !!!!!!!!!!여기서 App.jsx에 Router을 사용 안하면 오류뜨니, Router 작성 외에는 주석 처리 할 것!!
 - App.jsx 에서 import { Routes,Route,Link } from 'react-router-dom' //작성
   // Link는 a 태그 처럼 페이지 이동을 도와줌.

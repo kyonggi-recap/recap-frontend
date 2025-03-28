@@ -1,18 +1,17 @@
-// import { useState } from 'react'
+import { useState } from 'react'
 import { Routes,Route } from 'react-router-dom'
-import './App.css'
-import Header from './components/Header'
+import NewsPortal from "./pages/NewsPortal";
 
 function App() {
 
   return (
-    <>
-    <Header/>
-    <div>
-      <h1>테스트</h1>
-    </div>
-    </>
-  )
+    
+    <Routes>
+      <Route path="/" element={<NewsPortal />} />
+    </Routes>
+    
+   
+  );
 }
 
 export default App

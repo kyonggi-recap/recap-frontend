@@ -1,32 +1,40 @@
-import './components/Footer.css'; 
-import Footer from './components/Footer';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import NewsDetail from './pages/NewsDetail';
+import MyPage from './pages/MyPage';
+import './components/Footer.css'; 
 import './components/Navbar.css';
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
-import NewsDetail from './pages/NewsDetail'; 
+
 function App() {
+  const location = useLocation();
+  const isMyPage = location.pathname.startsWith('/mypage'); 
+
   return (
-    <> 
-    <Navbar />
-    <div className="app">
-    <main className="content">
-    <Routes>
-
+    <>
+      {!isMyPage && <Navbar />}
+      <div className="app">
+        <main className="content">
+          <Routes>
             <Route path="/news/:id" element={<NewsDetail />} />
+            <Route path="/mypage" element={<MyPage />} />
           </Routes>
-    </main>
-    
-  </div>
-  <Footer />
-  </>
-   
-  
- 
-
-   
-    
+        </main>
+      </div>
+      {!isMyPage && <Footer />}
+    </>
   );
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+

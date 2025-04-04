@@ -14,18 +14,28 @@
   }
   
   .nav-item {
-    font-weight: bold;
+    font-weight: bold;           
     margin: 0 1rem;
     position: relative;
     padding: 0 1rem;
     cursor: pointer;
   }
   
-  
   .nav-item:not(:last-child) {
     border-right: 1px solid #ddd;
   }
   
+  .nav-item a {
+    text-decoration: none;
+    color: #000000; 
+    font-weight: bold; 
+  }
+  .nav-item a:hover {
+    color: #000000; 
+  }
+  .nav-item.active a {
+    color: #000000; 
+  }
   
   .nav-item::after {
     content: '';

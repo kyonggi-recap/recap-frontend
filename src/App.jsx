@@ -14,14 +14,11 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
 
   return (
-    
-   
-  
     <>
     <div>
       <Header isLoggedIn={isLoggedIn} /> {/* isLoggedIn prop 전달 만약, 로그인 상태 확인 */}
         <Routes>
-          <Route path="/" element={<Home />} /> 
+          <Route path="/home" element={<Home />} /> 
           <Route path="/search" element={<SearchNews />} />
           <Route path="/mypage" element={<Mypage />} />
           <Route path="login" element={<Login />} />

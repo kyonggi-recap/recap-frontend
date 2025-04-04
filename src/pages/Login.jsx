@@ -1,12 +1,15 @@
 import React from 'react';
 import Logo from '../assets/Logo.png';
-import KakaoIcon from '../assets/Kakao_icon.png';
+import KakaoIcon from '../assets/kakao_login.png';
 import './Login.css';
+import { Navigate } from 'react-router-dom';
 // 로그인 페이지
 
 function Login() {
-  const handleKakaoLogin = () => {
-    console.log('카카오톡 로그인 버튼 클릭');
+  const link = 'http://localhost:8080/oauth2/authorization/kakao' //나중에 환경에 따라 local말고 client 환경에 따라 바뀌어야함. 
+
+  const handleKakaoLogin = () => { 
+    window.location.href = link;
   };
 
   return (
@@ -16,10 +19,7 @@ function Login() {
         <div className="text-space">
           <p>소셜 로그인으로 간편하게 시작하세요.</p>
         </div>
-        <button className="kakao-login-button" onClick={handleKakaoLogin}>
-          <img src={KakaoIcon} alt="Kakao Login" className="kakao-login-icon" />
-          카카오톡으로 로그인
-        </button>
+          <img src={KakaoIcon} alt="Kakao Login" className="kakao-login" onClick={handleKakaoLogin} />
       </div>
     </div>
   );

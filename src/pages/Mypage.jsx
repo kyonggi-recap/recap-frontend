@@ -1,6 +1,6 @@
 // pages/MyPage.jsx
 import { useState } from 'react';
-// import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/Sidebar';
 import CommentList from '../components/CommentList';
 import LikedNewsList from '../components/LikedNewsList';
 import './MyPage.css';

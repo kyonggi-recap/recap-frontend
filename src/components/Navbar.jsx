@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import './Navbar.css';
+import styles from './Navbar.moudule.css';
 
 export default function Navbar() {
   const location = useLocation();
@@ -16,7 +16,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="navbar">
+    <nav className={styles.navbar}>
       <ul className="nav-list">
         {links.map((link, index) => (
           <li

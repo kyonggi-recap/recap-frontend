@@ -176,3 +176,29 @@
   display: flex;
   align-items: center;
 }
+
+.cardTitle {
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: #111;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.pagination span {
+  cursor: pointer;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.pagination span:hover {
+  background-color: #ddd;
+}

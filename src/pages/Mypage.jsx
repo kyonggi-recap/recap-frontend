@@ -1,17 +1,16 @@
-// pages/MyPage.jsx
 import { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import CommentList from '../components/CommentList';
 import LikedNewsList from '../components/LikedNewsList';
-import './MyPage.css';
+import styles from './MyPage.module.css'; 
 
 export default function MyPage() {
   const [activeTab, setActiveTab] = useState('comments');
 
   return (
-    <div className="mypage-container">
+    <div className={styles.container}>
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <div className="mypage-content">
+      <div className={styles.content}>
         {activeTab === 'comments' && <CommentList />}
         {activeTab === 'liked' && <LikedNewsList />}
       </div>

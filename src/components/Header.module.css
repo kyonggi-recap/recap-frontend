@@ -1,4 +1,4 @@
-/* components/Header.css */
+/* components/Header.module.css */
 
 .header {
     display: flex;
@@ -25,24 +25,28 @@
     cursor: pointer;
   }
   
-  .search-icon {
+  .mypage_icon {
+    cursor: pointer;
+  }
+  
+  .search_icon {
     margin-right: 10px;
     cursor: pointer; /* 검색 아이콘에 커서 포인터 추가 */
   }
   
-  .search-form {
+  .search_form {
     display: flex;
     margin-left: 20px; /* 아이콘과의 간격 조정 */
   }
   
-  .search-input {
+  .search_input {
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
     margin-right: 8px;
   }
   
-  .search-button {
+  .search_button {
     padding: 8px 16px;
     background-color: #007bff;
     color: white;

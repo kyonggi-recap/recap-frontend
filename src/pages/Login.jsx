@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../assets/Logo.png';
 import KakaoIcon from '../assets/kakao_login.png';
-import './Login.css';
+import styles from './Login.module.css';
 import { Navigate } from 'react-router-dom';
 // 로그인 페이지
 
@@ -13,13 +13,13 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <img src={Logo} alt="Logo" className="logo" />
-        <div className="text-space">
+    <div className={styles.login_container}>
+      <div className={styles.login_card}>
+        <img src={Logo} alt="Logo" className={styles.logo} />
+        <div className={styles.text_space}>
           <p>소셜 로그인으로 간편하게 시작하세요.</p>
         </div>
-          <img src={KakaoIcon} alt="Kakao Login" className="kakao-login" onClick={handleKakaoLogin} />
+          <img src={KakaoIcon} alt="Kakao Login" className={styles.kakao_login} onClick={handleKakaoLogin} />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
-/* pages/Login.css */
+/* 로그인 페이지 css */
 
-.login-container {
+.login_container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,7 +9,7 @@
     padding-top: 20px;
   }
   
-  .login-card {
+  .login_card {
     background-color: white;
     padding: 40px;
     border-radius: 10px;
@@ -27,13 +27,13 @@
     margin-bottom: 20px;
   }
   
-  .text-space {
+  .text_space {
     margin-bottom: 60px;
     text-align: center;
     color: #555; /* 텍스트 색상 변경 */
   }
   
-  .kakao-login{
+  .kakao_login{
     margin: auto;
     width : 250px;
     height: 50px;

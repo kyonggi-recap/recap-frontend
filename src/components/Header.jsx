@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Logo from '../assets/Logo.png';
 import SearchIcon from '../assets/Search_icon.png';
 import MyPageIcon from '../assets/MyPage_icon.png';
-import './Header.css';
+import styles from './Header.module.css';
 
 function Header({ isLoggedIn }) { // isLoggedIn prop 받기
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -38,32 +38,32 @@ function Header({ isLoggedIn }) { // isLoggedIn prop 받기
   }
 
   return (
-    <header className="header">
-      <img src={Logo} alt="Logo" className="header_logo" onClick={handleLogoIconClick}/>
-      <div className="icons">
+    <header className={styles.header}>
+      <img src={Logo} alt="Logo" className={styles.header_logo} onClick={handleLogoIconClick}/>
+      <div className={styles.icons}>
         <img
           src={SearchIcon}
           alt="Search"
-          className="icon search-icon"
+          className={`${styles.icon} ${styles.search_icon}`}
           onClick={handleSearchIconClick}
         />
         <img
           src={MyPageIcon}
           alt="My Page"
-          className="icon"
+          className={`${styles.icon} ${styles.mypage_icon}`}
           onClick={handleMypageIconClick}
         />
       </div>
       {isSearchVisible && (
-        <form onSubmit={handleSearch} className="search-form">
+        <form onSubmit={handleSearch} className={styles.search_form}>
           <input
             type="text"
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
             placeholder="검색어를 입력하세요."
-            className="search-input"
+            className={styles.search_input}
           />
-          <button type="submit" className="search-button">검색</button>
+          <button type="submit" className={styles.search_button}>검색</button>
         </form>
       )}
     </header>

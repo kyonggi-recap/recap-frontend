@@ -10,6 +10,8 @@ import Footer from './components/Footer';
 import axios from 'axios';
 import Navbar from './components/Navbar';
 import NewsDetail from './pages/NewsDetail';
+import DeleteAccount from'./pages/DeleteAccount';
+import SuccessDelete from './pages/SuccessDelete';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
@@ -102,8 +104,10 @@ function App() {
           <Route path="/" element={<NewsPortal />} /> 
           <Route path="/search" element={<SearchNews />} />
           <Route path="/mypage" element={<Mypage />} />
-          <Route path="login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/news/:id" element={<NewsDetail />} />
+          <Route path="/deleteaccount" element={<DeleteAccount />} />
+          <Route path="/successdelete" element={<SuccessDelete />} />
         </Routes>
       <Footer/>
     </div>

@@ -49,6 +49,7 @@ node.js 설치. (node 버전 : 22.14.0 / npm 버전 : 10.9.2 )
 router 설치
 
 - npm i react-router-dom
+- npm i axios 
 - src에 폴더 pages 만들기 (페이지 모아놓는 파일)
 - main.jsx에 <App/>을 <BrowserRouter>로 묶기.
 - // !!!!!!!!!!!! 중요 !!!!!!!!!!여기서 App.jsx에 Router을 사용 안하면 오류뜨니, Router 작성 외에는 주석 처리 할 것!!

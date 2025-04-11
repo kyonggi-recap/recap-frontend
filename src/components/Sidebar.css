@@ -6,6 +6,14 @@
     flex-direction: column;
     justify-content: space-between;
   }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-left: 1rem; 
+    margin-bottom: 1.5rem;
+  }
   
   .logo-section {
     text-align: center;
@@ -13,7 +21,7 @@
   }
   
   .logo-img {
-    width: 100px;
+    width: 32px;
     margin: 0 auto;
     display: block;
   }
@@ -46,7 +54,9 @@
   }
   
   .pen-icon {
-    font-size: 0.8rem;
+    width: 16px;       
+    height: 16px;
+    object-fit: contain;
     cursor: pointer;
   }
   
@@ -80,4 +90,10 @@
     margin-top: auto;
     padding-top: 2rem;
     cursor: pointer;
+  }
+
+  .menu-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
   }

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Article from "../components/Article";
-import "./NewsPortal.css";
+import styles from "./NewsPortal.module.css";
+import Navbar from "../components/Navbar";
+import { useCategory } from "../components/CategoryContext";
 
 export default function NewsPortal() {
-  const [selectedCategory, setSelectedCategory] = useState("메인");
+  const{selectedCategory} = useCategory();
   const [selectedRegion, setSelectedRegion] = useState("국내"); // 국내/해외 전환 상태
   const [popularArticles, setPopularArticles] = useState([]);
   const [recommendedArticles, setRecommendedArticles] = useState([]);
@@ -53,49 +55,42 @@ export default function NewsPortal() {
       setRecommendedArticles(allArticles[selectedRegion].메인.filter(article => article.category === "recommended"));
       setArticles([]);
     } else {
-      setArticles(allArticles[selectedRegion][selectedCategory] || []);
+      const regionArticles = allArticles[selectedRegion][selectedCategory];
+      setArticles(regionArticles || []);
       setPopularArticles([]);
       setRecommendedArticles([]);
     }
   }, [selectedCategory, selectedRegion]);
 
   return (
-    <div className="news-container">
-      <nav className="news-nav">
-        <div>
-          {["메인", "정치", "경제","연애","스포츠"].map((tab) => (
-            <button key={tab} onClick={() => setSelectedCategory(tab)} className="news-tab">
-              {tab}
-            </button>
-          ))}
-        </div>
-        <div className="toggle-container">
+    <div className={styles.container}>
+        <div className={styles.toggleContainer}>
           <button onClick={() => setSelectedRegion(selectedRegion === "국내" ? "해외" : "국내")} 
-                  className={`toggle-button ${selectedRegion === "국내" ? "active" : ""}`}>
-            <div className="toggle-circle"></div>
+                  className={`${styles.toggleButton} ${selectedRegion === "국내" ? styles.toggleButtonActive : ""}`}>
+            <div className={styles.toggleCircle}></div>
           </button>
         </div>
-      </nav>
       
       {!selectedArticle ? (
         <div>
           {selectedCategory === "메인" ? (
             <>
-              <h2 className="news-section-title">지금 가장 인기 있는</h2>
-              <div className="articles-container">
+              <h2 className={styles.sectionTitle}>지금 가장 인기 있는</h2>
+              <div className={styles.articles}>
                 {popularArticles.map((article) => (
                   <Article key={article.id} article={article} onClick={setSelectedArticle} />
                 ))}
               </div>
-              <h2 className="news-section-title">추천 기사</h2>
-              <div className="articles-container">
+
+              <h2 className={styles.sectionTitle}>추천 기사</h2>
+              <div className={styles.articles}>
                 {recommendedArticles.map((article) => (
                   <Article key={article.id} article={article} onClick={setSelectedArticle} />
                 ))}
               </div>
             </>
           ) : (
-            <div className="articles-container">
+            <div className={styles.articles}>
               {articles.map((article) => (
                 <Article key={article.id} article={article} onClick={setSelectedArticle} />
               ))}
@@ -104,13 +99,25 @@ export default function NewsPortal() {
         </div>
       ) : (
         <div>
-          <button onClick={() => setSelectedArticle(null)} className="back-button">← 뒤로가기</button>
-          <h2 className="news-title">{selectedArticle.title}</h2>
-          <img src={selectedArticle.image} alt={selectedArticle.title} className="news-image" />
-          <p className="news-link">기사 원문 보러가기 →</p>
-          <div className="comment-section">
-            <textarea className="comment-input" placeholder="댓글 작성"></textarea>
-            <button className="submit-button">등록</button>
+          <button onClick={() => setSelectedArticle(null)} className={styles.backButton}>
+            ← 뒤로가기
+          </button>
+
+          <h2 className={styles.newsTitle}>{selectedArticle.title}</h2>
+          <img
+            src={selectedArticle.image}
+            alt={selectedArticle.title}
+            className={styles.newsImage}
+          />
+
+          <p className={styles.newsLink}>기사 원문 보러가기 →</p>
+
+          <div className={styles.commentSection}>
+            <textarea
+              className={styles.commentInput}
+              placeholder="댓글 작성"
+            ></textarea>
+            <button className={styles.submitButton}>등록</button>
           </div>
         </div>
       )}

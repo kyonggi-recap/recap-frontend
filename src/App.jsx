@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import axios from 'axios';
 import Navbar from './components/Navbar';
 import NewsDetail from './pages/NewsDetail';
+import { CategoryProvider } from './components/CategoryContext';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
@@ -95,8 +96,10 @@ function App() {
 
   return (
     <>
+    
     <div>
       <Header isLoggedIn={isLoggedIn} /> {/* isLoggedIn prop 전달 만약, 로그인 상태 확인 */}
+      <CategoryProvider>
       <Navbar/>
         <Routes>
           <Route path="/" element={<NewsPortal />} /> 
@@ -105,6 +108,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="/news/:id" element={<NewsDetail />} />
         </Routes>
+      </CategoryProvider>
       <Footer/>
     </div>
     </>

@@ -1,10 +1,10 @@
-.news-container {
+.container {
   max-width: 600px;
   margin: 0 auto;
   padding: 16px;
 }
 
-.news-nav {
+.nav {
   display: flex;
   gap: 16px;
   border-bottom: 2px solid #ddd;
@@ -12,7 +12,7 @@
   margin-bottom: 16px;
 }
 
-.news-tab {
+.tab {
   font-size: 18px;
   font-weight: bold;
   background: none;
@@ -22,23 +22,28 @@
   transition: border-bottom 0.2s;
 }
 
-.news-tab:hover {
+.tab:hover {
   border-bottom: 2px solid black;
 }
 
-.news-section-title {
+.tabActive {
+  border-bottom: 2px solid blue;
+  color: blue;
+}
+
+.sectionTitle {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 8px;
 }
 
-.articles-container {
+.articles {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.back-button {
+.backButton {
   margin-bottom: 16px;
   color: blue;
   cursor: pointer;
@@ -47,13 +52,13 @@
   font-size: 16px;
 }
 
-.news-title {
+.newsTitle {
   font-size: 22px;
   font-weight: bold;
   margin-bottom: 8px;
 }
 
-.news-image {
+.newsImage {
   width: 100%;
   height: 200px;
   object-fit: cover;
@@ -61,24 +66,24 @@
   margin-bottom: 8px;
 }
 
-.news-link {
+.newsLink {
   color: gray;
 }
 
-.comment-section {
+.commentSection {
   margin-top: 16px;
   border-top: 1px solid #ddd;
   padding-top: 8px;
 }
 
-.comment-input {
+.commentInput {
   width: 100%;
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
-.submit-button {
+.submitButton {
   margin-top: 8px;
   background: blue;
   color: white;
@@ -87,32 +92,16 @@
   border-radius: 4px;
   cursor: pointer;
 }
-.news-tab {
-  font-size: 18px;
-  font-weight: bold;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding-bottom: 4px;
-  transition: border-bottom 0.2s;
-}
 
-.news-tab:hover {
-  border-bottom: 2px solid black;
-}
-
-.news-tab.active {
-  border-bottom: 2px solid blue;
-  color: blue;
-}
-.toggle-container {
+.toggleContainer {
   position: relative;
   display: flex;
   justify-content: flex-end;
   margin-left: auto;
-  width:100px;
+  width: 100px;
 }
-.toggle-button {
+
+.toggleButton {
   width: 50px;
   height: 25px;
   background: #ddd;
@@ -125,11 +114,11 @@
   right: 20px;
 }
 
-.toggle-button.active {
-  background:rgb(68, 105, 189);
+.toggleButtonActive {
+  background: rgb(68, 105, 189);
 }
 
-.toggle-circle {
+.toggleCircle {
   width: 20px;
   height: 20px;
   background: white;
@@ -137,6 +126,6 @@
   transition: transform 0.3s ease;
 }
 
-.toggle-button.active .toggle-circle {
+.toggleButtonActive .toggleCircle {
   transform: translateX(25px);
-}  
+}

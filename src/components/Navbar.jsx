@@ -1,29 +1,22 @@
-import { Link, useLocation } from 'react-router-dom';
-import './Navbar.css';
+import { useCategory } from "./CategoryContext";
+import styles from './Navbar.module.css';
 
 export default function Navbar() {
-  const location = useLocation();
+  const { selectedCategory, setSelectedCategory } = useCategory();
 
-  const links = [
-    { label: '세계', path: '/world' },
-    { label: '국내', path: '/national' },
-    { label: '경제/비즈니스', path: '/business' },
-    { label: '기술', path: '/technology' },
-    { label: '연예', path: '/entertainment' },
-    { label: '스포츠', path: '/sports' },
-    { label: '과학', path: '/science' },
-    { label: '건강', path: '/health' },
-  ];
+  // 간단한 문자열 배열로 구성
+  const links = ["메인", "정치", "경제", "연예", "스포츠"];
 
   return (
-    <nav className="navbar">
-      <ul className="nav-list">
-        {links.map((link, index) => (
+    <nav className={styles.navbar}>
+      <ul className={styles.navlist}>
+        {links.map((label, index) => (
           <li
-            key={index}
-            className={`nav-item ${location.pathname === link.path ? 'active' : ''}`}
+            key={label + index}
+            className={`${styles.navitem} ${selectedCategory === label ? styles.active : ''}`}
+            onClick={() => setSelectedCategory(label)}
           >
-            <Link to={link.path}>{link.label}</Link>
+            {label}
           </li>
         ))}
       </ul>

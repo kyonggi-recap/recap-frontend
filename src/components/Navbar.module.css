@@ -4,7 +4,7 @@
   border-bottom: 1px solid #ddd;
 }
 
-.nav-list {
+.navlist {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,7 +13,7 @@
   margin: 0;
 }
 
-.nav-item {
+.navitem {
   font-weight: bold;           
   margin: 0 1rem;
   position: relative;
@@ -21,23 +21,19 @@
   cursor: pointer;
 }
 
-.nav-item:not(:last-child) {
-  border-right: 1px solid #ddd;
-}
-
-.nav-item a {
+.navitem a {
   text-decoration: none;
   color: #000000; 
   font-weight: bold; 
 }
-.nav-item a:hover {
+.navitem a:hover {
   color: #000000; 
 }
-.nav-item.active a {
+.navitem.active a {
   color: #000000; 
 }
 
-.nav-item::after {
+.navitem::after {
   content: '';
   position: absolute;
   left: 0;
@@ -53,6 +49,6 @@
 }
 
 
-.nav-item:hover::after {
+.navitem:hover::after {
   opacity: 1;
 }

@@ -23,6 +23,7 @@ function DeleteAccount() {
 
   const handleCancelClick = () => {
     console.log('탈퇴가 취소되었습니다.');
+    navigate('/'); //탈퇴 취소 시 메인으로 이동
   };
 
   return (

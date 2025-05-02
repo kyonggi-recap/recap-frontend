@@ -6,9 +6,9 @@ import { Navigate } from 'react-router-dom';
 // 로그인 페이지
 
 function Login() {
-  const link = 'http://localhost:8080/oauth2/authorization/kakao' //나중에 환경에 따라 local말고 client 환경에 따라 바뀌어야함. 
+  const link = 'http://15.164.211.206:8080/oauth2/authorization/kakao' //나중에 환경에 따라 local말고 client 환경에 따라 바뀌어야함. 
 
-  const handleKakaoLogin = () => { 
+  const handleKakaoLogin = () => {  
     window.location.href = link;
   };
 

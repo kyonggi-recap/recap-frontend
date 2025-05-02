@@ -7,6 +7,8 @@ import homeIcon from '../assets/home_butten.png';
 import logoutIcon from '../assets/logout_butten.png';
 import commentIcon from '../assets/comment.png';
 import likeIcon from '../assets/good.png';
+   import interestIcon from '../assets/interest.png';   
+
 
 export default function Sidebar({ activeTab, setActiveTab }) {
   const navigate = useNavigate();
@@ -30,7 +32,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
 
       {/* 메뉴 항목 */}
       <div className={styles.menuSection}>
-        <div className={styles.menuItem}>
+        <div className={styles.menuItem} onClick={()=>navigate('/')}>
           <img src={homeIcon} alt="홈으로" className={styles.menuIcon} />
           <span>홈으로</span>
         </div>
@@ -52,10 +54,19 @@ export default function Sidebar({ activeTab, setActiveTab }) {
           <img src={likeIcon} alt="좋아요 누른 뉴스" className={styles.menuIcon} />
           <span>좋아요 누른 뉴스</span>
         </div>
+        <div
+          className={styles.menuItem}
+          onClick={() => window.location.href = '/interest'}
+        >
+          <img src={interestIcon} alt="관심분야 설정" className={styles.menuIcon} />
+          <span>관심분야 설정</span>
+        </div>
+        
+
       </div>
 
-      {/* 회원 탈퇴 */}
-      <div className={styles.withdraw}
+     {/* 회원 탈퇴 */}
+     <div className={styles.withdraw}
            onClick={() => navigate('/deleteaccount')}>회원 탈퇴</div>
       </div>
   );

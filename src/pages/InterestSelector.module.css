@@ -1,0 +1,80 @@
+.wrapper {
+    background-color: #e5e5e5;
+    padding: 2rem;
+    border-radius: 20px;
+    width: 400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .logo {
+    width: 120px;
+    display: block;
+    margin: 0 auto 1rem;
+  }
+  
+  .title {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .item {
+    background: white;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    padding: 0.7rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .selected {
+    border-color: #444;
+    font-weight: bold;
+  }
+  
+  .icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 0.5rem;
+  }
+  
+  .order {
+    background-color: #ddd;
+    color: #222;
+    font-size: 0.8rem;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    border-radius: 50%;
+  }
+  
+  .button {
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #555;
+  }
+  

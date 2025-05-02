@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import styles from './Sidebar.module.css';
 import logoImg from '../assets/Logo.png';
 import avatarImg from '../assets/MyPage_icon.png';
@@ -8,6 +9,7 @@ import commentIcon from '../assets/comment.png';
 import likeIcon from '../assets/good.png';
 
 export default function Sidebar({ activeTab, setActiveTab }) {
+  const navigate = useNavigate();
   return (
     <div className={styles.sidebar}>
       {/* 로고 영역 */}
@@ -53,7 +55,8 @@ export default function Sidebar({ activeTab, setActiveTab }) {
       </div>
 
       {/* 회원 탈퇴 */}
-      <div className={styles.withdraw}>회원 탈퇴</div>
-    </div>
+      <div className={styles.withdraw}
+           onClick={() => navigate('/deleteaccount')}>회원 탈퇴</div>
+      </div>
   );
 }

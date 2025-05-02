@@ -13,6 +13,7 @@ import NewsDetail from './pages/NewsDetail';
 import { CategoryProvider } from './components/CategoryContext';
 import DeleteAccount from'./pages/DeleteAccount';
 import SuccessDelete from './pages/SuccessDelete';
+import InterestSelector from './pages/InterestSelector';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
@@ -99,7 +100,7 @@ function App() {
   return (
     <CategoryProvider>
     <>
-    <div>
+     <div>
       <Header isLoggedIn={isLoggedIn} /> {/* isLoggedIn prop 전달 만약, 로그인 상태 확인 */}
       <Navbar/>
         <Routes>
@@ -110,6 +111,7 @@ function App() {
           <Route path="/news/:id" element={<NewsDetail />} />
           <Route path="/deleteaccount" element={<DeleteAccount />} />
           <Route path="/successdelete" element={<SuccessDelete />} />
+          <Route path="/interest" element={<InterestSelector />} />
         </Routes>
       <Footer/>
     </div>

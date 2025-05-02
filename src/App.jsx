@@ -97,11 +97,10 @@ function App() {
   // };
 
   return (
+    <CategoryProvider>
     <>
-    
     <div>
       <Header isLoggedIn={isLoggedIn} /> {/* isLoggedIn prop 전달 만약, 로그인 상태 확인 */}
-      <CategoryProvider>
       <Navbar/>
         <Routes>
           <Route path="/" element={<NewsPortal />} /> 
@@ -112,10 +111,10 @@ function App() {
           <Route path="/deleteaccount" element={<DeleteAccount />} />
           <Route path="/successdelete" element={<SuccessDelete />} />
         </Routes>
-      </CategoryProvider>
       <Footer/>
     </div>
     </>
+    </CategoryProvider>
   )
 }
 

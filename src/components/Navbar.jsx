@@ -1,8 +1,15 @@
 import { useCategory } from "./CategoryContext";
 import styles from './Navbar.module.css';
+import { useNavigate, useLocation } from "react-router-dom";
+
 
 export default function Navbar() {
-  const { selectedCategory, setSelectedCategory } = useCategory();
+  const categoryContext = useCategory();
+  const selectedCategory = categoryContext?.selectedCategory;
+  const setSelectedCategory = categoryContext?.setSelectedCategory;
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // 간단한 문자열 배열로 구성
   const links = ["메인", "정치", "경제", "연예", "스포츠"];
@@ -10,11 +17,18 @@ export default function Navbar() {
   return (
     <nav className={styles.navbar}>
       <ul className={styles.navlist}>
-        {links.map((label, index) => (
+        {links.map((label) => (
           <li
-            key={label + index}
-            className={`${styles.navitem} ${selectedCategory === label ? styles.active : ''}`}
-            onClick={() => setSelectedCategory(label)}
+            key={label}
+            className={`${styles.navitem} ${selectedCategory === label ? styles.active : ""}`}
+            onClick={() => {
+              if (setSelectedCategory) {
+                setSelectedCategory(label);
+                if (location.pathname !== "/") {
+                  navigate("/");
+                }
+              }
+            }}
           >
             {label}
           </li>

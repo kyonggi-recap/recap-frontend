@@ -55,3 +55,8 @@ router 설치
 - // !!!!!!!!!!!! 중요 !!!!!!!!!!여기서 App.jsx에 Router을 사용 안하면 오류뜨니, Router 작성 외에는 주석 처리 할 것!!
 - App.jsx 에서 import { Routes,Route,Link } from 'react-router-dom' //작성
   // Link는 a 태그 처럼 페이지 이동을 도와줌.
+ 
+** 환경변수 env 파일 만들기 !!! 
+- 최상위 폴더에서 .env 만들기
+- VITE_APP_API_BASE_URL=http://{서버URL}  입력하고 저장!!! 서버 URL은 공지 댓글에 백엔드 swaggerUI 주소 참조
+- 

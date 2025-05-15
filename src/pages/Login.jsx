@@ -1,14 +1,14 @@
-import React from 'react';
 import Logo from '../assets/Logo.png';
 import KakaoIcon from '../assets/kakao_login.png';
 import styles from './Login.module.css';
-import { Navigate } from 'react-router-dom';
 // 로그인 페이지
 
 function Login() {
-  const link = 'http://15.164.211.206:8080/oauth2/authorization/kakao' //나중에 환경에 따라 local말고 client 환경에 따라 바뀌어야함. 
+  const API_URL = import.meta.env.VITE_APP_API_BASE_URL;
 
-  const handleKakaoLogin = () => {  
+  const link = `${API_URL}/oauth2/authorization/kakao` 
+  
+  const handleKakaoLogin = () => { 
     window.location.href = link;
   };
 

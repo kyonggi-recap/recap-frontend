@@ -3,10 +3,11 @@ import Article from "../components/Article";
 import styles from "./NewsPortal.module.css";
 import Navbar from "../components/Navbar";
 import { useCategory } from "../components/CategoryContext";
+import {useRegion} from "../components/RegionContext";
 
 export default function NewsPortal() {
   const{selectedCategory} = useCategory();
-  const [selectedRegion, setSelectedRegion] = useState("국내"); // 국내/해외 전환 상태
+  const {selectedRegion} = useRegion();
   const [popularArticles, setPopularArticles] = useState([]);
   const [recommendedArticles, setRecommendedArticles] = useState([]);
   const [articles, setArticles] = useState([]);
@@ -64,13 +65,6 @@ export default function NewsPortal() {
 
   return (
     <div className={styles.container}>
-        <div className={styles.toggleContainer}>
-          <button onClick={() => setSelectedRegion(selectedRegion === "국내" ? "해외" : "국내")} 
-                  className={`${styles.toggleButton} ${selectedRegion === "국내" ? styles.toggleButtonActive : ""}`}>
-            <div className={styles.toggleCircle}></div>
-          </button>
-        </div>
-      
       {!selectedArticle ? (
         <div>
           {selectedCategory === "메인" ? (

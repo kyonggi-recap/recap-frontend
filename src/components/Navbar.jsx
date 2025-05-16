@@ -1,4 +1,5 @@
 import { useCategory } from "./CategoryContext";
+import { useRegion } from "./RegionContext";
 import styles from './Navbar.module.css';
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -7,6 +8,10 @@ export default function Navbar() {
   const categoryContext = useCategory();
   const selectedCategory = categoryContext?.selectedCategory;
   const setSelectedCategory = categoryContext?.setSelectedCategory;
+
+  const regionContext = useRegion();
+  const selectedRegion = regionContext?.selectedRegion;
+  const setSelectedRegion = regionContext?.setSelectedRegion;
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,6 +38,12 @@ export default function Navbar() {
             {label}
           </li>
         ))}
+        <li className={styles.toggleContainer}>
+          <button onClick={() => setSelectedRegion(selectedRegion === "국내" ? "해외" : "국내")} 
+                  className={`${styles.toggleButton} ${selectedRegion === "국내" ? styles.toggleButtonActive : ""}`}>
+            <div className={styles.toggleCircle}></div>
+          </button>
+        </li>
       </ul>
     </nav>
   );

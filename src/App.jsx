@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import NewsDetail from './pages/NewsDetail';
 import { CategoryProvider } from './components/CategoryContext';
+import { RegionProvider } from './components/RegionContext';
 import DeleteAccount from './pages/DeleteAccount';
 import SuccessDelete from './pages/SuccessDelete';
 import InterestSelector from './pages/InterestSelector';
@@ -42,6 +43,7 @@ function App() {
 
   return (
     <CategoryProvider>
+      <RegionProvider>
       <div>
         <Header isLoggedIn={isLoggedIn} />
         <Navbar />
@@ -57,6 +59,7 @@ function App() {
         </Routes>
         <Footer />
       </div>
+      </RegionProvider>
     </CategoryProvider>
   );
 }

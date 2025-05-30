@@ -1,7 +1,7 @@
 .navbar {
-  background-color: white;
-  padding: 1rem 0;
-  border-bottom: 1px solid #ddd;
+  position: relative;      /* absolute 자식의 기준 */
+  display: flex;
+  align-items: center;     /* 수직 중앙 정렬 */
 }
 
 .navlist {
@@ -10,7 +10,7 @@
   align-items: center;
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
 }
 
 .navitem {
@@ -55,8 +55,10 @@
 
 
 .toggleContainer {
-  position: relative;
-  width: 100px;
+  position: absolute;
+  right: 1rem;              /* 필요에 따라 조정 */
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .toggleButton {
@@ -68,8 +70,8 @@
   align-items: center;
   padding: 3px;
   cursor: pointer;
-  position: absolute;
-  right: 20px;
+  position: relative;
+  margin-left: 1rem;
 }
 
 .toggleButtonActive {

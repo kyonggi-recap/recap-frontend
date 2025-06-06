@@ -44,6 +44,13 @@
   text-overflow: ellipsis; /* 말줄임표 적용 */
 }
 
+.article-con {
+  margin: 0;
+  font-size: 0.7rem;       /* 예: 1rem = 16px */
+  font-weight: 400;
+  color: #333;
+  line-height: 1.4;      /* 두 줄까지 텍스트 높이 조절 */
+}
 /* ── 5. 메타 정보(댓글·좋아요 등) ── */
 .article-meta {
   display: flex;
@@ -67,4 +74,8 @@
   margin-right: 4px;
   fill: #888; /* SVG일 경우 색상 지정 */
   font-size: 16px; /* 폰트 아이콘일 경우 크기 */
+}
+
+.score-item {
+  font-weight: 500px;
 }

@@ -14,6 +14,11 @@ function Article({ article, onClick }) {
       )}`
     : null;
 
+  const scorePercent =
+  typeof article.score === "number"
+    ? `${Math.round(article.score)}%`
+    : null;
+
   return (
     <div className="article-container" onClick={() => onClick(article)}>
       {proxyUrl && (
@@ -25,7 +30,7 @@ function Article({ article, onClick }) {
       )}
       <div className="article-content">
         <h3 className="article-title">{article.title}</h3>
-        <h2 className="article-content">{article.content}</h2>
+        <h2 className="article-con">{article.content}</h2>
         <div className="article-meta">
           <span className="meta-item">
             <img
@@ -43,6 +48,9 @@ function Article({ article, onClick }) {
             />
             {article.newsLikeCount}
           </span>
+          {scorePercent && (
+            <span className="meta-item score-item">{scorePercent}</span>
+          )}
         </div>
       </div>
     </div>

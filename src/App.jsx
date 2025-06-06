@@ -68,7 +68,7 @@ function App() {
         <Navbar />
         <div className='content-wrapper'>
           <Routes>
-            <Route path="/home" element={<NewsPortal />} />
+            <Route path="/" element={<NewsPortal />} />
             <Route path="/search" element={<SearchNews />} />
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/Login" element={<Login />} />

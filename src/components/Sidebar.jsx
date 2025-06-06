@@ -47,11 +47,6 @@ export default function Sidebar({ activeTab, setActiveTab }) {
 
   return (
     <div className={styles.sidebar}>
-      {/* 로고 영역 */}
-      <div className={styles.logoContainer}>
-        <img src={logoImg} alt="Re:cap 로고" className={styles.logoImg} />
-        <span className={styles.logoText}>Re:cap</span>
-      </div>
 
       {/* 프로필 영역 */}
       <div className={styles.profileSection}>

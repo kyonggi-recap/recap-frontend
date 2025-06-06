@@ -21,6 +21,9 @@ export default function NewsPortal() {
 
   const topicMap = {
     정치: "NATIONAL",
+    기술: "TECHNOLOGY",
+    과학: "SCIENCE",
+    건강: "HEALTH",
     경제: "BUSINESS",
     연예: "ENTERTAINMENT",
     스포츠: "SPORTS",

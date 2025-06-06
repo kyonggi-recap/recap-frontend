@@ -17,7 +17,7 @@ export default function Navbar() {
   const location = useLocation();
 
   // 간단한 문자열 배열로 구성
-  const links = ["메인", "국내", "세계", "기술", "과학", "건강", "경제", "연예", "스포츠"];
+  const links = ["메인", "세계", "기술", "과학", "건강", "경제", "연예", "스포츠"];
 
   return (
     <nav className={styles.navbar}>

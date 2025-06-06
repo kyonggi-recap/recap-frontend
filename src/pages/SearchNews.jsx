@@ -1,89 +1,119 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import styles from './SearchNews.module.css';
+// src/pages/SearchNews.jsx
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import api from "../api/axios";                      // axios 인스턴스 (baseURL 세팅)
+import { useRegion } from "../components/RegionContext";
+import Article from "../components/Article";          // 재사용 가능한 카드 컴포넌트
+import styles from "./SearchNews.module.css";
 
-function SearchNews() {
-  const API_URL = import.meta.env.VITE_APP_API_BASE_URL;
+export default function SearchNews() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { selectedRegion } = useRegion(); // "국내" 또는 "해외"
+  
+  // URL 쿼리에서 keyword를 꺼냅니다. (ex: /search?keyword=apple)
   const searchParams = new URLSearchParams(location.search);
-  const query = searchParams.get('keyword');
-  const country = searchParams.get('type');
+  const query = searchParams.get("keyword") || "";
 
-  const [newsList, setNewsList] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // RegionContext의 selectedRegion 을 BFF API가 요구하는 형식으로 바꿔줍니다.
+  const country = selectedRegion === "국내" ? "KR" : "US";
+
+  const [newsList, setNewsList] = useState([]); // NewsBffDto[] 형태로 저장
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // 1페이지(0) / 페이지당 10개
+  const PAGE     = 0;
+  const PAGESIZE = 10;
 
   useEffect(() => {
-    if (query && country) {
-      const fetchNews = async () => {
-        try {
-          setLoading(true);
-          const page = 0;
-          const size = 10;
-
-          const url = `http://${API_URL}/bff/api/news/search?query=${encodeURIComponent(query)}&country=${country}&page=${page}&size=${size}`;
-          const response = await fetch(url, {
-            headers: { 'accept': 'application/json' }
-          });
-          const data = await response.json();
-          setNewsList(data.articles || []);
-        } catch (error) {
-          console.error('뉴스 검색 실패:', error);
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchNews();
+    // keyword가 비어 있으면 API를 호출하지 않고 빈 리스트로 둡니다.
+    if (!query.trim()) {
+      setNewsList([]);
+      return;
     }
+
+    const fetchSearchResults = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        // BFF Search API: /bff/api/news/search?query={}&country={}&page={}&size={}
+        const res = await api.get("/bff/api/news/search", {
+          params: {
+            query: query,
+            country: country,
+            page: PAGE,
+            size: PAGESIZE,
+          },
+        });
+
+        // 응답 스키마: { contents: NewsBffDto[], page: PageBffDto }
+        // 필요한 건 contents(뉴스 배열) 뿐이므로,
+        // 성공 케이스에서는 contents 배열을 state에 넣습니다.
+        const responseData = res.data || {};
+        const contents = responseData.contents || [];
+        setNewsList(contents);
+      } catch (err) {
+        console.error("뉴스 검색 실패:", err);
+        setError("검색 중 오류가 발생했습니다.");
+        setNewsList([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSearchResults();
   }, [query, country]);
+
+  // 검색 결과 중 아무것도 없고, 로딩도 끝났을 때 “검색어를 입력하세요”가 아니라
+  // “결과가 없습니다” 메시지를 띄우기 위해서 아래와 같이 분기합니다.
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>검색 결과</h2>
+
+      {/* 검색 키워드 표시 */}
       <div className={styles.info}>
-        <span className={styles.keyword}>
-          “<span className={styles.highlight}>{query}</span>”
-        </span>{' '}
-        검색 결과
+        {query ? (
+          <>
+            “<span className={styles.highlight}>{query}</span>” 검색 결과
+          </>
+        ) : (
+          <>검색어를 입력하세요.</>
+        )}
       </div>
 
       {loading ? (
-        <p className={styles.loading}>로딩 중...</p>
+        <p className={styles.loading}>로딩 중…</p>
+      ) : error ? (
+        <p className={styles.error}>{error}</p>
       ) : newsList.length > 0 ? (
-        <ul className={styles.newsList}>
-          {newsList.map((news, index) => (
-            <li key={index} className={styles.newsCard}>
-              <div className={styles.thumbnail}>
-                <img src={news.thumbnail || '/default-thumbnail.png'} alt="썸네일" />
-              </div>
-              <div className={styles.newsContent}>
-                <h3 className={styles.newsTitle}>{news.title}</h3>
-                <p className={styles.newsSummary}>{news.summary}</p>
-                <div className={styles.newsMeta}>
-                  <span>{news.publisher}</span>
-                  <span>🕒 {news.date || '날짜 미제공'}</span>
-                  <span>👍 {news.likeCount || 0}</span>
-                </div>
-                <a
-                  href={news.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.readMore}
-                >
-                  자세히 보기
-                </a>
-              </div>
-            </li>
+        <div className={styles.articles}>
+          {newsList.map((newsItem) => (
+            <Article
+              key={newsItem.id}
+              article={newsItem}
+              onClick={() =>
+                // 클릭 시 뉴스 상세 페이지로 이동
+                navigate(`/news/${newsItem.id}`, { state: { article: newsItem } })
+              }
+            />
           ))}
-        </ul>
+        </div>
       ) : (
+        // keyword가 비어 있거나, 검색 결과가 0개인 경우
         <div className={styles.noResults}>
-          <p>
-            📭 <span className={styles.highlight}>“{query}”</span>에 대한 검색 결과가 존재하지 않습니다.
-          </p>
+          {query ? (
+            <p>
+              📭 <span className={styles.highlight}>“{query}”</span>에 대한 검색 결과가
+              없습니다.
+            </p>
+          ) : (
+            <p>검색어를 입력하고 Enter 키를 눌러주세요.</p>
+          )}
         </div>
       )}
     </div>
   );
 }
-
-export default SearchNews;

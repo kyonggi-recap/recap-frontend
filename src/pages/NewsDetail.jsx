@@ -26,7 +26,7 @@ export default function NewsDetail() {
         console.log('💬 댓글 목록:', data.comments);
         setNews(data.news);
         setComments(data.comments || []);
-        setArticleLikes(data.news.likeCount || 0);
+        setArticleLikes(data.news.newsLikeCount || 0);
       })
       .catch(err => console.error('뉴스 불러오기 실패:', err));
   }, [id]);

@@ -1,126 +1,162 @@
+import api from "../api/axios";
 import React, { useState, useEffect } from "react";
 import Article from "../components/Article";
 import styles from "./NewsPortal.module.css";
-import Navbar from "../components/Navbar";
 import { useCategory } from "../components/CategoryContext";
+import {useRegion} from "../components/RegionContext";
+import { useNavigate } from "react-router-dom";
+
+const PAGE_SIZE = 10;
 
 export default function NewsPortal() {
-  const{selectedCategory} = useCategory();
-  const [selectedRegion, setSelectedRegion] = useState("국내"); // 국내/해외 전환 상태
+  const {selectedCategory} = useCategory();
+  const {selectedRegion} = useRegion();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [fullArticles, setFullArticles] = useState([]);
   const [popularArticles, setPopularArticles] = useState([]);
   const [recommendedArticles, setRecommendedArticles] = useState([]);
-  const [articles, setArticles] = useState([]);
-  const [selectedArticle, setSelectedArticle] = useState(null);
+  const [page, setPage] = useState(1);
 
-  const allArticles = {
-    국내: {
-      메인: [
-        { id: 1, title: "인기 기사 1", category: "popular", image: "https://via.placeholder.com/150" },
-        { id: 2, title: "인기 기사 2", category: "popular", image: "https://via.placeholder.com/150" },
-        { id: 17, title: "인기 기사 3", category: "popular", image: "https://via.placeholder.com/150" },
-        { id: 3, title: "추천 기사 1", category: "recommended", image: "https://via.placeholder.com/150" },
-        { id: 4, title: "추천 기사 2", category: "recommended", image: "https://via.placeholder.com/150" },
-        { id: 18, title: "추천 기사 3", category: "recommended", image: "https://via.placeholder.com/150" },
-      ],
-      정치: [
-        { id: 5, title: "국내 정치 기사 1", image: "https://via.placeholder.com/150" },
-        { id: 6, title: "국내 정치 기사 2", image: "https://via.placeholder.com/150" },
-      ],
-      경제: [
-        { id: 7, title: "국내 경제 기사 1", image: "https://via.placeholder.com/150" },
-        { id: 8, title: "국내 경제 기사 2", image: "https://via.placeholder.com/150" },
-      ],
-    },
-    해외: {
-      메인: [
-        { id: 9, title: "해외 인기 기사 1", category: "popular", image: "https://via.placeholder.com/150" },
-        { id: 10, title: "해외 인기 기사 2", category: "popular", image: "https://via.placeholder.com/150" },
-        { id: 11, title: "해외 추천 기사 1", category: "recommended", image: "https://via.placeholder.com/150" },
-        { id: 12, title: "해외 추천 기사 2", category: "recommended", image: "https://via.placeholder.com/150" },
-      ],
-      정치: [
-        { id: 13, title: "해외 정치 기사 1", image: "https://via.placeholder.com/150" },
-        { id: 14, title: "해외 정치 기사 2", image: "https://via.placeholder.com/150" },
-      ],
-      경제: [
-        { id: 15, title: "해외 경제 기사 1", image: "https://via.placeholder.com/150" },
-        { id: 16, title: "해외 경제 기사 2", image: "https://via.placeholder.com/150" },
-      ],
-    }
+  const topicMap = {
+    정치: "NATIONAL",
+    경제: "BUSINESS",
+    연예: "ENTERTAINMENT",
+    스포츠: "SPORTS",
+  };
+  // 지역→country 매핑
+  const countryMap = { 국내: "KR", 해외: "US" };
+
+  const handleArticleClick = (article) => {
+    navigate(`/news/${article.id}`, { state: { article } });
   };
 
+  // 메인 카테고리: 인기 & 추천 기사 3개씩 fetch
   useEffect(() => {
-    if (selectedCategory === "메인") {
-      setPopularArticles(allArticles[selectedRegion].메인.filter(article => article.category === "popular"));
-      setRecommendedArticles(allArticles[selectedRegion].메인.filter(article => article.category === "recommended"));
-      setArticles([]);
-    } else {
-      const regionArticles = allArticles[selectedRegion][selectedCategory];
-      setArticles(regionArticles || []);
-      setPopularArticles([]);
-      setRecommendedArticles([]);
-    }
+    if (selectedCategory !== "메인") return;
+    const fetchHome = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const country = countryMap[selectedRegion];
+        const res = await api.get("/bff/api/news/home", { params: { country } });
+        const homeData = res.data || {};
+        const hot = homeData.hotNewsList || [];
+        const rec = homeData.recommendationNewsList || [];
+        setPopularArticles(hot.slice(0, 3));
+        setRecommendedArticles(rec.slice(0, 3));
+      } catch (err) {
+        console.error("메인 기사 로드 실패:", err);
+        setError("메인 기사를 불러오는 중 오류가 발생했습니다.");
+        setPopularArticles([]);
+        setRecommendedArticles([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchHome();
+    // reset scroll state
+    setFullArticles([]);
+    setPage(1);
   }, [selectedCategory, selectedRegion]);
 
-  return (
-    <div className={styles.container}>
-        <div className={styles.toggleContainer}>
-          <button onClick={() => setSelectedRegion(selectedRegion === "국내" ? "해외" : "국내")} 
-                  className={`${styles.toggleButton} ${selectedRegion === "국내" ? styles.toggleButtonActive : ""}`}>
-            <div className={styles.toggleCircle}></div>
-          </button>
-        </div>
-      
-      {!selectedArticle ? (
-        <div>
-          {selectedCategory === "메인" ? (
-            <>
-              <h2 className={styles.sectionTitle}>지금 가장 인기 있는</h2>
-              <div className={styles.articles}>
-                {popularArticles.map((article) => (
-                  <Article key={article.id} article={article} onClick={setSelectedArticle} />
-                ))}
-              </div>
+  useEffect(() => {
+    if(selectedCategory === "메인") return;
+    const fetchAllArticles = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const topic = topicMap[selectedCategory];
+        const country = countryMap[selectedRegion];
+        const res = await api.get(
+          `/bff/api/news/topics/${topic}`,
+          { params: { country } }
+        );
+        const list = res.data.topicNewsList || [];
+        setFullArticles(list);
+        setPage(1);
+      } catch (err) {
+        console.error("기사 로드 실패:", err);
+        setError("기사를 불러오는 중 오류가 발생했습니다.");
+        setFullArticles([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAllArticles();
+  }, [selectedCategory, selectedRegion]);
 
-              <h2 className={styles.sectionTitle}>추천 기사</h2>
-              <div className={styles.articles}>
-                {recommendedArticles.map((article) => (
-                  <Article key={article.id} article={article} onClick={setSelectedArticle} />
-                ))}
-              </div>
-            </>
-          ) : (
-            <div className={styles.articles}>
-              {articles.map((article) => (
-                <Article key={article.id} article={article} onClick={setSelectedArticle} />
-              ))}
-            </div>
-          )}
-        </div>
+  // 무한 스크롤
+    useEffect(() => {
+    if (selectedCategory === "메인") return;
+    const onScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 300 &&
+        !loading &&
+        page * PAGE_SIZE < fullArticles.length
+      ) setPage((p) => p + 1);
+    };
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [fullArticles.length, loading, page, selectedCategory]);
+
+  const displayArticles =
+    selectedCategory === "메인"
+      ? []
+      : fullArticles.slice(0, page * PAGE_SIZE);
+
+ return (
+  <div className={styles.container}>
+    {selectedCategory === "메인" ? (
+      loading ? (
+        <p>로딩 중…</p>
       ) : (
-        <div>
-          <button onClick={() => setSelectedArticle(null)} className={styles.backButton}>
-            ← 뒤로가기
-          </button>
-
-          <h2 className={styles.newsTitle}>{selectedArticle.title}</h2>
-          <img
-            src={selectedArticle.image}
-            alt={selectedArticle.title}
-            className={styles.newsImage}
-          />
-
-          <p className={styles.newsLink}>기사 원문 보러가기 →</p>
-
-          <div className={styles.commentSection}>
-            <textarea
-              className={styles.commentInput}
-              placeholder="댓글 작성"
-            ></textarea>
-            <button className={styles.submitButton}>등록</button>
+        <>
+          <h2 className={styles.sectionTitle}>지금 가장 인기 있는</h2>
+          <div className={styles.articles}>
+            {popularArticles.map((a) => (
+              <Article
+                key={a.id}
+                article={a}
+                onClick={() => handleArticleClick(a)}
+              />
+            ))}
           </div>
+
+          <h2 className={styles.sectionTitle}>추천 기사</h2>
+          <div className={styles.articles}>
+            {recommendedArticles.map((a) => (
+              <Article
+                key={a.id}
+                article={a}
+                onClick={() => handleArticleClick(a)}
+              />
+            ))}
+          </div>
+        </>
+      )
+    ) : (
+      <div>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <div className={styles.articles}>
+          {displayArticles.map((a) => (
+            <Article
+              key={a.id}
+              article={a}
+              onClick={() => handleArticleClick(a)}
+            />
+          ))}
         </div>
-      )}
-    </div>
-  );
+        {loading && <p>로딩 중…</p>}
+        {!loading && displayArticles.length === 0 && (
+          <p>표시할 기사가 없습니다</p>
+        )}
+        {!loading && displayArticles.length >= fullArticles.length && (
+          <p>더 이상 기사가 없습니다</p>
+        )}
+      </div>
+    )}
+  </div>
+);
 }

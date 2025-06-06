@@ -223,7 +223,7 @@ export default function NewsDetail() {
 </div>
 
         <div className="news-like">
-          <button onClick={handleArticleLike} disabled={articleLiked}>
+          <button className="like-button" onClick={handleArticleLike} disabled={articleLiked}>
             👍 좋아요 {articleLikes}
           </button>
         </div>

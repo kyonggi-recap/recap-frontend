@@ -2,6 +2,8 @@
   position: relative;      /* absolute 자식의 기준 */
   display: flex;
   align-items: center;     /* 수직 중앙 정렬 */
+  border-bottom: 1px solid #ddd;
+  padding: 0.5rem 0;
 }
 
 .navlist {

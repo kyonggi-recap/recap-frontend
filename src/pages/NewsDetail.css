@@ -18,10 +18,11 @@
   margin-bottom: 1rem;
 }
 
-.news.thumbnailUrl {
-  width: 120px;
-  height: auto;
-  border-radius: 8px;
+.news-image {
+  width: 120px;        
+  height: auto;          
+  object-fit: contain;     
+  display: block;        
 }
 
 .news-text {
@@ -55,6 +56,20 @@
 .news-like {
   text-align: center;
   margin: 1rem 0;
+}
+
+.news-provider {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.news-thumbnail-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1rem;
 }
 
 .like-button {

@@ -2,20 +2,38 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Sidebar.module.css';
 import logoImg from '../assets/Logo.png';
-import avatarImg from '../assets/MyPage_icon.png';
 import homeIcon from '../assets/home_butten.png';
 import logoutIcon from '../assets/logout_butten.png';
 import commentIcon from '../assets/comment.png';
 import likeIcon from '../assets/good.png';
 import interestIcon from '../assets/interest.png';
 
+const API_URL = import.meta.env.VITE_APP_API_BASE_URL;
+
 export default function Sidebar({ activeTab, setActiveTab }) {
   const navigate = useNavigate();
-  const [userId, setUserId] = useState('');
+  const [nickname, setNickname] = useState('로딩중...');
+  const [imageUrl, setImageUrl] = useState('');
 
   useEffect(() => {
-    const storedId = localStorage.getItem('userId');
-    setUserId(storedId);
+    const token = localStorage.getItem('accessToken');
+    if (!token) return;
+
+    fetch(`${API_URL}/bff/api/users/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log('🙋‍♀️ 유저 정보:', data);
+        setNickname(data.nickname || '알 수 없음');
+        setImageUrl(data.imageUrl || '');
+      })
+      .catch(err => {
+        console.error('유저 정보 불러오기 실패:', err);
+        setNickname('알 수 없음');
+      });
   }, []);
 
   const handleLogout = () => {
@@ -24,7 +42,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('userId');
     alert('로그아웃 되었습니다.');
-    navigate('/'); // 메인으로 이동
+    navigate('/');
   };
 
   return (
@@ -37,10 +55,17 @@ export default function Sidebar({ activeTab, setActiveTab }) {
 
       {/* 프로필 영역 */}
       <div className={styles.profileSection}>
-        <img src={avatarImg} alt="아바타" className={styles.avatarCircle} />
+        <img
+          src={imageUrl || '/default-thumbnail.png'}
+          alt="아바타"
+          className={styles.avatarCircle}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = '/default-thumbnail.png';
+          }}
+        />
         <div className={styles.nickname}>
-          <strong>{`유저 ${userId}`}</strong>
-        
+          <strong>{nickname}</strong>
         </div>
         <hr className={styles.nicknameUnderline} />
       </div>

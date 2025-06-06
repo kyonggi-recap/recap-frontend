@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ 추가
+import { useNavigate } from 'react-router-dom'; // 라우터 이동용
 import styles from '../pages/MyPage.module.css';
 
 const API_URL = import.meta.env.VITE_APP_API_BASE_URL;
@@ -8,7 +8,7 @@ export default function LikedNewsList() {
   const [likedNews, setLikedNews] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-  const navigate = useNavigate(); // ✅ 라우터 이동용
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -51,24 +51,47 @@ export default function LikedNewsList() {
             <div
               className={styles.newsCard}
               key={item.id}
-              onClick={() => navigate(`/news/${item.id}`)} // ✅ 내부 이동
+              onClick={() => navigate(`/news/${item.id}`)}
               style={{ cursor: 'pointer' }}
             >
-              <img
-                src={item.thumbnailUrl}
-                alt="뉴스 이미지"
-                className={styles.cardImage}
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = '/default-thumbnail.png';
-                }}
-              />
-              <div className={styles.cardText}>
-                <p className={styles.cardTitle}>{item.title}</p>
+              {/* ━━━━━━━━━━━━━━━ 상단: 썸네일 + (제목/날짜·통계) ━━━━━━━━━━━━━━━ */}
+              <div className={styles.cardTop}>
+                {/* ─ 썸네일 ─ */}
+                <img
+                  src={`${API_URL}/bff/api/image-proxy?url=${encodeURIComponent(item.thumbnailUrl)}`}
+                  alt="뉴스 이미지"
+                  className={styles.cardImage}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/default-thumbnail.png';
+                  }}
+                />
+
+                {/* ─ 제목 + 날짜·통계 영역 ─ */}
+                <div className={styles.cardInfo}>
+                  {/* • 제목 (볼드, 왼쪽 정렬) */}
+                  <p className={styles.cardTitle}>{item.title}</p>
+
+                  {/* • 날짜(왼쪽) · 통계(오른쪽) 한 행에 배치 */}
+                  <div className={styles.cardMetaRow}>
+                    <span className={styles.cardDate}>
+                      {item.publishedAt?.slice(0, 10).replace(/-/g, '.')}
+                    </span>
+                    <div className={styles.cardStats}>
+                      <span>💬 {item.commentCount}</span>
+                      <span>⭐ {item.newsLikeCount}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+              {/* ━━━━━━━━━━━━━━━ 구분선 ━━━━━━━━━━━━━━━ */}
+              <hr className={styles.cardDivider} />
             </div>
           ))}
         </div>
+
+        {/* ━━━━━━━━━━━━━━━ 페이지네이션 ━━━━━━━━━━━━━━━ */}
         <div className={styles.pagination}>
           <span
             className={styles.pageNumber}

@@ -189,18 +189,38 @@ export default function NewsDetail() {
     <div className="news-container">
       <div className="news-card">
         <div className="news-header">
-          <img src={news.thumbnailUrl} alt="기사 이미지" className="news-image" />
-          <div className="news-text">
-            <h3 className="news-title">{news.title}</h3>
-            <p className="news-summary">{news.summary}</p>
-            <p className="news-content">{news.content}</p>
-            {news.link && (
-              <a href={news.link} className="news-link" target="_blank" rel="noopener noreferrer">
-                기사 원문 보러가기 →
-              </a>
-            )}
-          </div>
-        </div>
+  {/* ✅ 썸네일 + 뉴스사 이름을 감싸는 div 추가 */}
+  <div className="news-thumbnail-wrapper">
+    <img
+      src={`${API_URL}/bff/api/image-proxy?url=${encodeURIComponent(news.thumbnailUrl)}`}
+      alt="기사 이미지"
+      className="news-image"
+      onError={(e) => {
+        e.target.onerror = null;
+        e.target.src = '/default-thumbnail.png';
+      }}
+    />
+    {news.provider && (
+      <p className="news-provider">{news.provider}</p>
+    )}
+  </div>
+
+  {/* 제목, 본문, 원문 링크 */}
+  <div className="news-text">
+    <h3 className="news-title">{news.title}</h3>
+    <p className="news-content">{news.content}</p>
+    {news.link && (
+      <a
+        href={news.link}
+        className="news-link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        기사 원문 보러가기 →
+      </a>
+    )}
+  </div>
+</div>
 
         <div className="news-like">
           <button onClick={handleArticleLike} disabled={articleLiked}>

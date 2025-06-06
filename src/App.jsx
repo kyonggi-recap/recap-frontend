@@ -63,19 +63,21 @@ function App() {
   return (
     <CategoryProvider>
       <RegionProvider>
-      <div>
+      <div className='app-container'>
         <Header isLoggedIn={isLoggedIn} />
         <Navbar />
-        <Routes>
-          <Route path="/" element={<NewsPortal />} />
-          <Route path="/search" element={<SearchNews />} />
-          <Route path="/mypage" element={<Mypage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/news/:id" element={<NewsDetail />} />
-          <Route path="/deleteaccount" element={<DeleteAccount />} />
-          <Route path="/successdelete" element={<SuccessDelete />} />
-          <Route path="/interest" element={<InterestSelector />} />
-        </Routes>
+        <div className='content-wrapper'>
+          <Routes>
+            <Route path="/" element={<NewsPortal />} />
+            <Route path="/search" element={<SearchNews />} />
+            <Route path="/mypage" element={<Mypage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/news/:id" element={<NewsDetail />} />
+            <Route path="/deleteaccount" element={<DeleteAccount />} />
+            <Route path="/successdelete" element={<SuccessDelete />} />
+            <Route path="/interest" element={<InterestSelector />} />
+          </Routes>
+        </div>
         <Footer />
       </div>
       </RegionProvider>

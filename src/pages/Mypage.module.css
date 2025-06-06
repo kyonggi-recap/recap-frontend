@@ -202,3 +202,9 @@
 .pagination span:hover {
   background-color: #ddd;
 }
+
+.pageNumber.active {
+  font-weight: bold;
+  color: black;
+  border-bottom: 2px solid black;
+} 

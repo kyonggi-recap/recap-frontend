@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ 내부 라우팅용 추가
+import { useNavigate } from 'react-router-dom';
 import styles from '../pages/MyPage.module.css';
 
 const API_URL = import.meta.env.VITE_APP_API_BASE_URL;
@@ -8,7 +8,7 @@ export default function CommentList() {
   const [comments, setComments] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
-  const navigate = useNavigate(); // ✅
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -16,7 +16,6 @@ export default function CommentList() {
       console.warn('❗토큰이 없습니다. 로그인 필요');
       return;
     }
-    console.log("🔑 accessToken:", token);
     fetch(`${API_URL}/bff/api/users/comments`, {
       method: 'GET',
       headers: {
@@ -46,17 +45,16 @@ export default function CommentList() {
       <h2 className={styles.sectionTitle}>작성한 댓글</h2>
       <div className={styles.cardContainer}>
         <div className={styles.cardList}>
-          {displayedComments.map((item) => {
-            console.log("🧾 댓글 아이템:", item);
-            return (
+          {displayedComments.map((item) => (
+            <div className={styles.newsCard} key={item.commentId}>
+
+              {/* ── 상단: 썸네일 + 제목/날짜/통계 ── */}
               <div
-                className={styles.newsCard}
-                key={item.id}
-                onClick={() => navigate(`/news/${item.newsId}`)} // ✅ 내부 이동
-                style={{ cursor: 'pointer' }}
+                className={styles.cardTop}
+                onClick={() => navigate(`/news/${item.newsId}`)}
               >
                 <img
-                  src={item.thumbnailUrl}
+                  src={`${API_URL}/bff/api/image-proxy?url=${encodeURIComponent(item.thumbnailUrl)}`}
                   alt="뉴스 이미지"
                   className={styles.cardImage}
                   onError={(e) => {
@@ -64,14 +62,49 @@ export default function CommentList() {
                     e.target.src = '/default-thumbnail.png';
                   }}
                 />
-                <div className={styles.cardText}>
+                <div className={styles.cardInfo}>
+                  {/* 기사 제목 */}
                   <p className={styles.cardTitle}>{item.title}</p>
+
+                  {/* 날짜와 통계 영역 (📅 날짜 | 💬 댓글 수 · ⭐ 뉴스 좋아요 수) */}
+                  <div className={styles.cardDateRow}>
+                    {/* YYYY.MM.DD 형태로 포맷팅 */}
+                    <span>
+                      {item.publishedAt?.slice(0, 10).replace(/-/g, '.')}
+                    </span>
+                    <div className={styles.cardStats}>
+                      <span>💬 {item.commentCount}</span>
+                      <span>⭐ {item.newsLikeCount}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            );
-          })}
+
+              {/* ── 구분선 ── */}
+              <hr className={styles.cardDivider} />
+
+              {/* ── 하단: 닉네임 · 댓글 날짜 → 댓글 내용 → 좋아요/싫어요 ── */}
+              <div className={styles.commentBox}>
+                <div className={styles.commentMeta}>
+                  <span>{item.nickname}</span>
+                  <span>
+                    {item.createdDate?.slice(0, 10).replace(/-/g, '.')}
+                  </span>
+                </div>
+                <div className={styles.commentContent}>
+                  └ {item.commentContent}
+                </div>
+                <div className={styles.commentReactions}>
+                  <span>👍 {item.commentLikeCount}</span>
+                  <span>👎 {item.commentDislikeCount}</span>
+                </div>
+              </div>
+
+            </div>
+          ))}
         </div>
 
+        {/* ── 페이징(페이지 번호) ── */}
         <div className={styles.pagination}>
           <span
             className={styles.pageNumber}

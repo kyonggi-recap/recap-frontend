@@ -1,3 +1,9 @@
+/* ------------------------------------------------------------
+   MyPage.module.css
+   CommentList.jsx와 함께 사용하는 스타일 시트 전체 내용
+   ------------------------------------------------------------ */
+
+/* ── 레이아웃 컨테이너 & 기본 폰트 ── */
 .container {
   display: flex;
   height: 100vh;
@@ -12,7 +18,7 @@
   flex-direction: column;
 }
 
-/* 사이드바 */
+/* ── 사이드바 영역 ── */
 .sidebar {
   width: 250px;
   background-color: #f2f2f2;
@@ -22,7 +28,7 @@
   justify-content: space-between;
 }
 
-/* 로고 */
+/* ── 로고 ── */
 .logoContainer {
   display: flex;
   align-items: center;
@@ -41,7 +47,7 @@
   font-weight: bold;
 }
 
-/* 프로필 */
+/* ── 프로필 Section ── */
 .profileSection {
   text-align: center;
 }
@@ -78,7 +84,7 @@
   margin-right: auto;
 }
 
-/* 메뉴 */
+/* ── 메뉴 Section ── */
 .menuSection {
   margin-top: 2rem;
   display: flex;
@@ -102,7 +108,7 @@
   font-weight: bold;
 }
 
-/* 회원 탈퇴 */
+/* ── 회원 탈퇴 ── */
 .withdraw {
   text-align: center;
   font-size: 0.85rem;
@@ -112,7 +118,7 @@
   cursor: pointer;
 }
 
-/* 콘텐츠 제목 */
+/* ── 콘텐츠 제목 ── */
 .sectionTitle {
   font-size: 1.2rem;
   font-weight: bold;
@@ -121,7 +127,7 @@
   text-align: left;
 }
 
-/* 카드 외부 박스 */
+/* ── 카드 외부 박스 ── */
 .cardContainer {
   flex: 1;
   background-color: #fff;
@@ -135,6 +141,7 @@
   height: calc(100vh - 200px);
 }
 
+/* ── 카드 리스트 래퍼 ── */
 .cardListWrapper {
   flex: 1;
   display: flex;
@@ -143,46 +150,126 @@
   width: 100%;
 }
 
+/* ── 카드 리스트 ── */
 .cardList {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
 }
 
+/* ── 뉴스 카드 (하나의 댓글 카드) 전체 ── */
 .newsCard {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  flex-direction: column;    /* ◆ 세로로 쌓이도록 변경 */
+  align-items: flex-start;    /* 내부 요소(제목/댓글 등)이 왼쪽 정렬 */
   background-color: #e6e6e6;
   border-radius: 20px;
   padding: 1.2rem;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   box-sizing: border-box;
 }
 
+/* ── 카드 상단: 썸네일 + (제목 / 날짜·통계) ── */
+.cardTop {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+  cursor: pointer;
+  position: relative;
+}
+
+/* ── 카드 이미지 ── */
 .cardImage {
   width: 110px;
   height: 85px;
   border-radius: 8px;
   object-fit: cover;
-  margin-right: 1rem;
+  flex-shrink: 0;
 }
 
-.cardText {
+/* ── 카드 텍스트 영역 (제목 / 날짜·통계) ── */
+.cardInfo {
+  flex: 1;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
+/* • 제목 (볼드, 왼쪽 정렬) */
 .cardTitle {
   font-size: 0.95rem;
-  font-weight: bold;
+  font-weight: bold;       /* ◆ 제목을 볼드체로 */
   color: #111;
+  text-align: left;        /* ◆ 왼쪽 정렬 */
+  margin-bottom: 0.3rem;    /* 제목과 날짜·통계 사이 간격 */
 }
 
+/* • 날짜와 통계(댓글 수 · 뉴스 좋아요 수) 한 행에 배치 */
+.cardMetaRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #555;
+  width: 100%;             /* ◆ 부모 폭을 꽉 채워서 좌우 끝에 배치 */
+}
+
+/* 날짜(왼쪽) */
+.cardDate {
+  text-align: left;
+}
+
+/* 댓글·별점 통계 (오른쪽) */
+.cardStats {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+/* ── 카드 구분선 (가로 라인) ── */
+.cardDivider {
+  border-top: 1px solid #ccc;
+  width: 100%;             /* ◆ 구분선도 카드 전체 너비 */
+  margin: 0.8rem 0;
+}
+
+/* ── 댓글 박스 전체 ── */
+.commentBox {
+  width: 100%;
+}
+
+/* ── 댓글 메타: 닉네임 · 댓글 작성 날짜 ── */
+.commentMeta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #444;
+  margin-bottom: 0.4rem;
+}
+
+/* ── 댓글 내용 ── */
+.commentContent {
+  font-size: 0.95rem;
+  color: #111;
+  margin-bottom: 0.6rem;
+  white-space: pre-wrap;   /* 줄바꿈 그대로 유지 */
+  padding-left: 1rem;      /* “└ ” 들여쓰기 여백 */
+}
+
+/* ── 댓글 리액션 (좋아요 / 싫어요) ── */
+.commentReactions {
+  display: flex;
+  justify-content: flex-end; 
+  gap: 12px;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+/* ── 페이지네이션 ── */
 .pagination {
   display: flex;
   justify-content: center;
@@ -203,8 +290,9 @@
   background-color: #ddd;
 }
 
+/* 현재 페이지 강조 */
 .pageNumber.active {
   font-weight: bold;
   color: black;
   border-bottom: 2px solid black;
-} 
+}

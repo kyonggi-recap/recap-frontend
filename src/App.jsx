@@ -68,10 +68,10 @@ function App() {
         <Navbar />
         <div className='content-wrapper'>
           <Routes>
-            <Route path="/" element={<NewsPortal />} />
+            <Route path="/home" element={<NewsPortal />} />
             <Route path="/search" element={<SearchNews />} />
             <Route path="/mypage" element={<Mypage />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Login />} />
             <Route path="/news/:id" element={<NewsDetail />} />
             <Route path="/deleteaccount" element={<DeleteAccount />} />
             <Route path="/successdelete" element={<SuccessDelete />} />

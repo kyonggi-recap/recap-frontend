@@ -7,7 +7,7 @@ const API_URL = import.meta.env.VITE_APP_API_BASE_URL;
 export default function CommentList() {
   const [comments, setComments] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 2;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,11 +48,12 @@ export default function CommentList() {
           {displayedComments.map((item) => (
             <div className={styles.newsCard} key={item.commentId}>
 
-              {/* ── 상단: 썸네일 + 제목/날짜/통계 ── */}
+              {/* ━━━━ 상단: 썸네일 + (제목 / 날짜·통계) ━━━━ */}
               <div
                 className={styles.cardTop}
                 onClick={() => navigate(`/news/${item.newsId}`)}
               >
+                {/* ─ 썸네일 ─ */}
                 <img
                   src={`${API_URL}/bff/api/image-proxy?url=${encodeURIComponent(item.thumbnailUrl)}`}
                   alt="뉴스 이미지"
@@ -62,14 +63,15 @@ export default function CommentList() {
                     e.target.src = '/default-thumbnail.png';
                   }}
                 />
+
+                {/* ─ 제목 + 날짜·통계 영역 ─ */}
                 <div className={styles.cardInfo}>
-                  {/* 기사 제목 */}
+                  {/* • 제목 (굵게, 왼쪽 정렬) */}
                   <p className={styles.cardTitle}>{item.title}</p>
 
-                  {/* 날짜와 통계 영역 (📅 날짜 | 💬 댓글 수 · ⭐ 뉴스 좋아요 수) */}
-                  <div className={styles.cardDateRow}>
-                    {/* YYYY.MM.DD 형태로 포맷팅 */}
-                    <span>
+                  {/* • 날짜(왼쪽) · 통계(오른쪽) 한 행에 배치 */}
+                  <div className={styles.cardMetaRow}>
+                    <span className={styles.cardDate}>
                       {item.publishedAt?.slice(0, 10).replace(/-/g, '.')}
                     </span>
                     <div className={styles.cardStats}>
@@ -80,31 +82,35 @@ export default function CommentList() {
                 </div>
               </div>
 
-              {/* ── 구분선 ── */}
+              {/* ━━━━ 구분선 ━━━━ */}
               <hr className={styles.cardDivider} />
 
-              {/* ── 하단: 닉네임 · 댓글 날짜 → 댓글 내용 → 좋아요/싫어요 ── */}
+              {/* ━━━━ 하단: 닉네임 · 댓글 날짜 / 댓글 내용 / 좋아요·싫어요 ━━━━ */}
               <div className={styles.commentBox}>
+                {/* 닉네임 · 댓글 작성 날짜 */}
                 <div className={styles.commentMeta}>
                   <span>{item.nickname}</span>
                   <span>
                     {item.createdDate?.slice(0, 10).replace(/-/g, '.')}
                   </span>
                 </div>
+
+                {/* 댓글 내용 (앞에 “└ ” 붙임) */}
                 <div className={styles.commentContent}>
                   └ {item.commentContent}
                 </div>
+
+                {/* 좋아요·싫어요 */}
                 <div className={styles.commentReactions}>
                   <span>👍 {item.commentLikeCount}</span>
                   <span>👎 {item.commentDislikeCount}</span>
                 </div>
               </div>
-
             </div>
           ))}
         </div>
 
-        {/* ── 페이징(페이지 번호) ── */}
+        {/* ─ 페이지네이션 ─ */}
         <div className={styles.pagination}>
           <span
             className={styles.pageNumber}

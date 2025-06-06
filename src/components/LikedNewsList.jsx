@@ -7,7 +7,7 @@ const API_URL = import.meta.env.VITE_APP_API_BASE_URL;
 export default function LikedNewsList() {
   const [likedNews, setLikedNews] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 3;
   const navigate = useNavigate();
 
   useEffect(() => {

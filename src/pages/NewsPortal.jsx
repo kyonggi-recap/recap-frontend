@@ -21,6 +21,7 @@ export default function NewsPortal() {
 
   const topicMap = {
     정치: "NATIONAL",
+    세계: "WORLD",
     기술: "TECHNOLOGY",
     과학: "SCIENCE",
     건강: "HEALTH",
@@ -28,6 +29,7 @@ export default function NewsPortal() {
     연예: "ENTERTAINMENT",
     스포츠: "SPORTS",
   };
+  
   // 지역→country 매핑
   const countryMap = { 국내: "KR", 해외: "US" };
 

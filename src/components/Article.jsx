@@ -2,6 +2,7 @@ import React from "react";
 import "./Article.css";
 import commentIcon from "../assets/comment.png"
 import likeIcon from "../assets/good.png"
+import scoreIcon from "../assets/Score.png"
 
 
 function Article({ article, onClick }) {
@@ -49,7 +50,10 @@ function Article({ article, onClick }) {
             {article.newsLikeCount}
           </span>
           {scorePercent && (
-            <span className="meta-item score-item">{scorePercent}</span>
+            <span className="meta-item score-item">
+              <img src={scoreIcon} alt="신뢰도 아이콘" className="icon score-icon"/>
+              {scorePercent}
+            </span>
           )}
         </div>
       </div>
